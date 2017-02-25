@@ -12,6 +12,7 @@ import React, { PropTypes } from 'react';
 import Layout from '../../components/Layout';
 import s from './styles.css';
 import { title, html } from './index.md';
+import { Checkbox } from 'material-ui';
 
 class HomePage extends React.Component {
 
@@ -42,6 +43,7 @@ class HomePage extends React.Component {
             by {article.author}</li>,
           )}
         </ul>
+        <Checkbox label="Testing"/>
         <p>
           <br /><br />
         </p>
