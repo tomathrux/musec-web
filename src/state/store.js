@@ -9,10 +9,9 @@ const actionsMap = {
 }
 
 const store = createStore((state = initialState, action) => {
-  // TODO: Add action handlers (aka "reducers")
-  switch (action.type) {
-    case 'COUNT':
-      return { ...state, count: (state.count) + 1 };
+  switch(action.type) {
+    case actionTypes.COUNT:
+      return actionsMap[actionTypes.COUNT](state);
     default:
       return state;
   }

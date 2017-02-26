@@ -9,10 +9,24 @@
  */
 
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Layout from '../../components/Layout';
 import s from './styles.css';
 import { title, html } from './index.md';
-import { Checkbox } from 'material-ui';
+import { Checkbox, RaisedButton } from 'material-ui';
+import * as actionCreators from '../state/actions';
+
+const mapStateToProps = (state) => {
+  return {
+    count: state.count,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    incCount : () => dispatch(actionCreators.incrementCount()),
+  }
+}
 
 class HomePage extends React.Component {
 
@@ -22,6 +36,8 @@ class HomePage extends React.Component {
       title: PropTypes.string.isRequired,
       author: PropTypes.string.isRequired,
     }).isRequired).isRequired,
+    count : PropTypes.number,
+    incCount : PropTypes.func,
   };
 
   componentDidMount() {
@@ -35,22 +51,21 @@ class HomePage extends React.Component {
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: html }}
         />
-        <h4>Articles</h4>
         <ul>
           {this.props.articles.map(article =>
             <li key={article.url}>
               <a href={article.url}>{article.title}</a>
-            by {article.author}</li>,
+            by {article.author} count { this.props.count }</li>,
           )}
         </ul>
         <Checkbox label="Testing"/>
+        <RaisedButton label={"Button"} onClick={this.props.incCount}/>
         <p>
           <br /><br />
         </p>
       </Layout>
     );
   }
-
 }
 
-export default HomePage;
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
