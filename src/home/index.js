@@ -10,10 +10,7 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Layout from '../../components/Layout';
-import s from './styles.css';
-import { title, html } from './index.md';
-import { Checkbox, RaisedButton } from 'material-ui';
+import { AppBar, Paper, Drawer } from 'material-ui';
 import * as actionCreators from '../state/actions';
 
 const mapStateToProps = (state) => {
@@ -31,39 +28,23 @@ const mapDispatchToProps = (dispatch) => {
 class HomePage extends React.Component {
 
   static propTypes = {
-    articles: PropTypes.arrayOf(PropTypes.shape({
-      url: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      author: PropTypes.string.isRequired,
-    }).isRequired).isRequired,
-    count : PropTypes.number,
-    incCount : PropTypes.func,
   };
-
-  componentDidMount() {
-    document.title = title;
-  }
 
   render() {
     return (
-      <Layout className={s.content}>
+      <div>
+      <AppBar
+        title="Musec"
+        iconClassNameRight="muidocs-icon-navigation-expand-more"
+      />
+      <Paper
+        style={{ margin : 10 }}>
         <div
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-        <ul>
-          {this.props.articles.map(article =>
-            <li key={article.url}>
-              <a href={article.url}>{article.title}</a>
-            by {article.author} count { this.props.count }</li>,
-          )}
-        </ul>
-        <Checkbox label="Testing"/>
-        <RaisedButton label={"Button"} onClick={this.props.incCount}/>
-        <p>
-          <br /><br />
-        </p>
-      </Layout>
+          style={{ margin : 10 }}>
+          Example Text
+        </div>
+      </Paper>
+      </div>
     );
   }
 }
