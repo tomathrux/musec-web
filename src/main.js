@@ -18,6 +18,9 @@ import { Provider } from 'react-redux';
 // Material ui theme injection
 // TODO : Inject tap event plugin for mobile devices
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
 
 import store from './state/store';
 import router from './router';
@@ -28,7 +31,7 @@ let routes = require('./routes.json').default; // Loaded with utils/routes-loade
 const container = document.getElementById('container');
 
 function renderComponent(component) {
-  ReactDOM.render(<MuiThemeProvider><Provider store={store}>{component}</Provider></MuiThemeProvider>, container);
+  ReactDOM.render(<MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}><Provider store={store}>{component}</Provider></MuiThemeProvider>, container);
 }
 
 // Find and render a web page matching the current URL path,
