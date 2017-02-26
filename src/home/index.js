@@ -27,23 +27,40 @@ const mapDispatchToProps = (dispatch) => {
 
 class HomePage extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      isDrawerOpen : false,
+    };
+  }
+
   static propTypes = {
   };
+
+  toggleDrawer = () => {
+    console.log(this.state);
+    this.setState({ ...this.state, isDrawerOpen : !this.state.isDrawerOpen })
+  }
 
   render() {
     return (
       <div>
       <AppBar
         title="Musec"
+        onLeftIconButtonTouchTap={ this.toggleDrawer }
         iconClassNameRight="muidocs-icon-navigation-expand-more"
       />
       <Paper
-        style={{ margin : 10 }}>
+        style={{ margin : 10, height : 600 }}>
         <div
           style={{ margin : 10 }}>
           Example Text
         </div>
       </Paper>
+        <Drawer
+          open={ this.state.isDrawerOpen }
+          docked={ false }
+          onRequestChange={ this.toggleDrawer }/>
       </div>
     );
   }
