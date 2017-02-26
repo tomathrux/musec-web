@@ -10,7 +10,8 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { AppBar, Paper, Drawer } from 'material-ui';
+import { AppBar } from 'material-ui';
+import MenuDrawer from '../components'
 import * as actionCreators from '../state/actions';
 
 const mapStateToProps = (state) => {
@@ -30,7 +31,7 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDrawerOpen : false,
+      isMenuOpen : false,
     };
   }
 
@@ -38,28 +39,19 @@ class HomePage extends React.Component {
   };
 
   toggleDrawer = () => {
-    console.log(this.state);
-    this.setState({ ...this.state, isDrawerOpen : !this.state.isDrawerOpen })
+    this.setState({ ...this.state, isMenuOpen : !this.state.isMenuOpen })
   }
 
   render() {
     return (
       <div>
       <AppBar
-        title="Musec"
+        title=""
         onLeftIconButtonTouchTap={ this.toggleDrawer }
         iconClassNameRight="muidocs-icon-navigation-expand-more"
       />
-      <Paper
-        style={{ margin : 10, height : 600 }}>
-        <div
-          style={{ margin : 10 }}>
-          Example Text
-        </div>
-      </Paper>
-        <Drawer
-          open={ this.state.isDrawerOpen }
-          docked={ false }
+        <MenuDrawer
+          isOpen={ this.state.isMenuOpen }
           onRequestChange={ this.toggleDrawer }/>
       </div>
     );
