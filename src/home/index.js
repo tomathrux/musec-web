@@ -51,7 +51,7 @@ class HomePage extends React.Component {
           iconClassNameRight="muidocs-icon-navigation-expand-more"
         />
         <Paper>
-          <SongList />
+          <SongList songs={[{ 'name' : 'Song name', artist : 'artist', album : 'album', runtime : '3:24' }]}/>
         </Paper>
         <MenuDrawer
           isOpen={ this.state.isMenuOpen }

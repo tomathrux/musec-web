@@ -6,7 +6,7 @@ const primaryMenu = [
   <ListItem key={ 0 } primaryText="Songs" leftIcon={ <AvLibraryMusic /> } />,
   <ListItem key={ 1 }primaryText="Albums" leftIcon={ <AvAlbum/> } />,
   <ListItem key={ 2 }primaryText="Artists" leftIcon={ <SocialPerson /> }/>,
-  <ListItem key={ 3 }primaryText="Starred" leftIcon={ <ToggleStar /> } />,
+  <ListItem key={ 3 }primaryText="Liked" leftIcon={ <ToggleStar /> } />,
 ];
 
 const playlists = [
