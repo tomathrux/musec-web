@@ -10,8 +10,8 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { AppBar } from 'material-ui';
-import MenuDrawer from '../components'
+import { AppBar, Paper } from 'material-ui';
+import { MenuDrawer, SongList } from '../components'
 import * as actionCreators from '../state/actions';
 
 const mapStateToProps = (state) => {
@@ -45,11 +45,14 @@ class HomePage extends React.Component {
   render() {
     return (
       <div>
-      <AppBar
-        title=""
-        onLeftIconButtonTouchTap={ this.toggleDrawer }
-        iconClassNameRight="muidocs-icon-navigation-expand-more"
-      />
+        <AppBar
+          title=""
+          onLeftIconButtonTouchTap={ this.toggleDrawer }
+          iconClassNameRight="muidocs-icon-navigation-expand-more"
+        />
+        <Paper>
+          <SongList />
+        </Paper>
         <MenuDrawer
           isOpen={ this.state.isMenuOpen }
           onRequestChange={ this.toggleDrawer }/>
