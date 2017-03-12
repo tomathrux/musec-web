@@ -1,7 +1,7 @@
 import actionTypes from '../action-types';
 
-export function incrementCount() {
+export function togglePlay() {
   return {
-    type: actionTypes.COUNT,
+    type: actionTypes.TOGGLEPLAY,
   };
 }

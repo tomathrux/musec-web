@@ -1,3 +1,3 @@
 export default {
-  COUNT : 'TEST/COUNT',
+  TOGGLEPLAY : 'PLAYER/TOGGLEPLAY',
 }

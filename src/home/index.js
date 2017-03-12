@@ -1,28 +1,23 @@
-/**
- * React Static Boilerplate
- * https://github.com/kriasoft/react-static-boilerplate
- *
- * Copyright © 2015-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import Async from 'react-promise';
 import { AppBar, Paper } from 'material-ui';
 import { MenuDrawer, SongList } from '../components'
 import * as actionCreators from '../state/actions';
+import { Player } from '../components'
+import * as requests from '../requests';
 
 const mapStateToProps = (state) => {
   return {
-    count: state.count,
+    playing : state.playing,
+    currentSong : state.currentSong,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    incCount : () => dispatch(actionCreators.incrementCount()),
+    togglePlay : () => dispatch(actionCreators.togglePlay()),
   }
 }
 
@@ -43,6 +38,9 @@ class HomePage extends React.Component {
   }
 
   render() {
+
+    let prom = requests.songSearch('cloud kid');
+
     return (
       <div>
         <AppBar
@@ -50,12 +48,18 @@ class HomePage extends React.Component {
           onLeftIconButtonTouchTap={ this.toggleDrawer }
           iconClassNameRight="muidocs-icon-navigation-expand-more"
         />
-        <Paper>
-          <SongList songs={[{ 'name' : 'Song name', artist : 'artist', album : 'album', runtime : '3:24' }]}/>
+        <Paper style={{ margin: 14 }}>
+          <Async promise={ requests.songSearch('cloud kid') } then={ (result) => <SongList songs={ result } currentSong={ this.props.currentSong } playing={ this.props.playing } /> } />
         </Paper>
         <MenuDrawer
           isOpen={ this.state.isMenuOpen }
           onRequestChange={ this.toggleDrawer }/>
+        <Player
+          playing={ this.props.playing }
+          src={ '/audio?videoId=' + this.props.currentSong.id.videoId }
+          runTime={ this.props.currentSong.duration }
+          onProgressUpdate={ this.updateProgress }
+          onEnd={ this.songEnd }/>
       </div>
     );
   }

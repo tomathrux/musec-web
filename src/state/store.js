@@ -5,15 +5,14 @@ import actionTypes from './action-types';
 import * as test from './reducers';
 
 const actionsMap = {
-  [actionTypes.COUNT] : (state, action) => (test.count(state)),
+  [actionTypes.TOGGLEPLAY] : (state, action) => (test.togglePlay(state)),
 }
 
 const store = createStore((state = initialState, action) => {
-  switch(action.type) {
-    case actionTypes.COUNT:
-      return actionsMap[actionTypes.COUNT](state);
-    default:
-      return state;
+  if (!actionsMap[action.type]) {
+    return state;
+  } else {
+    return actionsMap[action.type];
   }
 });
 

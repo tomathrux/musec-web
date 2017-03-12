@@ -3,8 +3,10 @@
  */
 import MenuDrawer from './MenuDrawer/MenuDrawer';
 import SongList from './SongList/SongList';
+import Player from './Player/Player';
 
 export {
   MenuDrawer,
   SongList,
+  Player,
 }

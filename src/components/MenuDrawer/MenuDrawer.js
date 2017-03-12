@@ -9,15 +9,6 @@ const primaryMenu = [
   <ListItem key={ 3 }primaryText="Liked" leftIcon={ <ToggleStar /> } />,
 ];
 
-const playlists = [
-  <ListItem primaryText="Supa songz" secondaryText="Kapil chodehang"/>,
-  <ListItem primaryText="Grim" secondaryText="Kapil chodehang"/>,
-  <ListItem primaryText="Wow lol" secondaryText="Kapil chodehang"/>,
-  <ListItem primaryText="fels bod mun" secondaryText="Kapil chodehang"/>,
-  <ListItem primaryText="nope nope nope" secondaryText="Kapil chodehang"/>,
-  <ListItem primaryText="perhaps not" secondaryText="Kapil chodehang"/>,
-]
-
 class MenuDrawer extends React.Component {
 
   constructor(props) {
@@ -44,8 +35,6 @@ class MenuDrawer extends React.Component {
               <ListItem primaryText="Home" leftIcon={ <ActionHome /> } />
               <Subheader>Music</Subheader>
               { primaryMenu }
-              <Subheader>Playlists</Subheader>
-              { playlists }
             </List>
           </div>
         }
