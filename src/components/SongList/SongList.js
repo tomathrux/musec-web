@@ -11,28 +11,31 @@ class SongList extends React.Component {
 
   static propTypes = {
     songs: React.PropTypes.array.isRequired,
+    changeCurrentSong: PropTypes.func.isRequired,
+    togglePlay: PropTypes.func.isRequired,
   };
 
   togglePlay = (song) => {
-    let playing = true;
-    if (this.state.currentSong.id.videoId == song.id.videoId) {
-      playing = !this.state.playing
-    }
-    this.setState(Object.assign({}, this.state, { currentSong : song, playing : playing, loading : true }));
-  }
 
-  updateProgress = (time) => {
-    if (Math.floor(time) != this.state.currentTime) {
-      this.setState({ 'currentTime' : Math.floor(time) });
+    if (!this.props.currentSong.id.kind || this.props.currentSong.id.videoId == song.id.videoId) {
+      this.props.togglePlay();
     }
-  }
+    this.props.changeCurrentSong(song);
+  };
 
-  songEnd = () => {
-    this.setState({ 'playing' : false });
-  }
+  convertDuration = (seconds) => {
+    let mins = Math.floor(seconds / 60);
+    seconds = ("00" + (seconds % 60)).slice(-2);
+    return (mins + ':' + seconds);
+  };
+
 
   render() {
-  console.log(this.props.songs)
+    if (this.props.songs.length == 0) {
+      return (
+        <div style={{ margin : 14 }}>No results :(</div>
+      );
+    }
     return (
           <Table>
             <TableHeader displaySelectAll={ false } adjustForCheckbox={ false }>
@@ -57,7 +60,7 @@ class SongList extends React.Component {
                   </TableRowColumn>
                   <TableRowColumn>{ song.snippet.title }</TableRowColumn>
                   <TableRowColumn style={{ width : 150 }}>{ song.snippet.channelTitle }</TableRowColumn>
-                  <TableRowColumn style={{ width : 50 }}>{ song.duration }</TableRowColumn>
+                  <TableRowColumn style={{ width : 50 }}>{ this.convertDuration(song.duration) }</TableRowColumn>
                 </TableRow>
               )) }
             </TableBody>

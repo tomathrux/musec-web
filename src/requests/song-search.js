@@ -14,28 +14,36 @@ function parseDur(original) {
   return dur;
 }
 
-export default async function songSearch(terms, results=30)
-{
-  let searchData = await fetch('https://content.googleapis.com/youtube/v3/search?part=snippet&maxResults=' + results + '&q=' + terms + '&key=AIzaSyCsOw-_6yXgsapyBDSVX5WCHx76njnN6jM').then(function(response) {
-    return response.json();
-  })
-  let {items} = searchData;
+export default function songSearch(terms, results=30) {
+  return fetch('https://content.googleapis.com/youtube/v3/search?part=snippet&maxResults=' + results + '&q=' + terms + '&key=AIzaSyCsOw-_6yXgsapyBDSVX5WCHx76njnN6jM')
+    .then(function(response) {
+      return response.json()
+    })
+    .then(function(response) {
+      let { items } = response
 
-  for (let i in items) {
-    if (items[i].id.kind != "youtube#video" || items[i].snippet.liveBroadcastContent == "live") {
-      items.splice(i, 1);
-    }
-  }
+      for (let i in items) {
+        if (items[i].id.kind != "youtube#video" || items[i].snippet.liveBroadcastContent == "live") {
+          items.splice(i, 1);
+        }
+      }
+      return items;
+    })
+    .then(function(items) {
+      let ids = items.map((item) => (item.id.videoId))
 
-  let ids = items.map((item) => (item.id.videoId))
+      return fetch('https://www.googleapis.com/youtube/v3/videos?id=' + ids + '&part=contentDetails&key=AIzaSyCsOw-_6yXgsapyBDSVX5WCHx76njnN6jM')
+        .then(function(response) {
+          return response.json()
+        })
+        .then(function(json) {
 
-  let infoData = await fetch('https://www.googleapis.com/youtube/v3/videos?id=' + ids + '&part=contentDetails&key=AIzaSyCsOw-_6yXgsapyBDSVX5WCHx76njnN6jM').then(function(response) {
-    return response.json();
-  })
-
-  for (let i in items) {
-    items[i].duration = parseDur(infoData.items[i].contentDetails.duration);
-  }
-
-  return items;
-};
+          for (let i in items) {
+            if (!!json.items[i]) {
+              items[i].duration = parseDur(json.items[i].contentDetails.duration);
+            }
+          }
+          return items;
+        })
+    })
+}

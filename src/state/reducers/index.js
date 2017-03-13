@@ -4,3 +4,7 @@
 export function togglePlay(state) {
   return { ...state, playing : !state.playing };
 }
+
+export function changeCurrentSong(state, action) {
+  return { ...state, currentSong : action.payload};
+}

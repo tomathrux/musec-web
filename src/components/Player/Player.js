@@ -53,8 +53,8 @@ class Player extends React.Component {
 
     let { src } = this.props;
 
-    if (src.length == 0) {
-      return (<div></div>);
+    if (src == '') {
+      return;
     } else {
       return (
         <audio

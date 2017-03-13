@@ -5,3 +5,10 @@ export function togglePlay() {
     type: actionTypes.TOGGLEPLAY,
   };
 }
+
+export function changeCurrentSong(song) {
+  return {
+    type : actionTypes.CHANGECURRENTSONG,
+    payload : song,
+  }
+}
