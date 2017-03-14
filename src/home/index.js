@@ -5,7 +5,7 @@ import { AppBar, Paper, AutoComplete, Subheader, IconButton, LinearProgress } fr
 import { AvPlayArrow, AvPause, AvSkipNext, AvSkipPrevious, ActionSearch, NavigationClose } from 'material-ui/svg-icons'
 import { MenuDrawer, SongList } from '../components'
 import * as actionCreators from '../state/actions';
-import { Player } from '../components'
+import { Player, SearchBar } from '../components'
 import * as requests from '../requests';
 
 const mapStateToProps = (state) => {
@@ -53,32 +53,11 @@ class HomePage extends React.Component {
     }
   }
 
-  updateSearchInput = (terms) => {
-    if (terms.length == 0) {
-      this.setState({ ...this.state, autoCompleteSongs : [] })
-    } else {
-      requests.songSearch(terms, 5).then((res) => {
-        if (res.length == 0) {
-          this.setState({...this.state, autoCompleteSongs: []})
-        } else {
-          this.setState({
-            ...this.state, autoCompleteSongs: res.map((item) => (
-              item.snippet.title
-            )), currentSearch : terms,
-          })
-        }
-      })
-    }
-  }
-
-  updateSearch = () => {
-
-    let terms = this.state.currentSearch;
-
+  updateSearch = (terms) => {
     if (terms.length == 0) {
       this.setState({ ...this.state, songs : [] })
     } else {
-      requests.songSearch(terms, 50).then((res) => (
+      requests.songSearch(terms, 20).then((res) => (
         this.setState({ ...this.state, songs : res, currentResults : terms })
       ))
     }
@@ -86,19 +65,6 @@ class HomePage extends React.Component {
 
   toggleDrawer = () => {
     this.setState({ ...this.state, isMenuOpen : !this.state.isMenuOpen })
-  }
-
-  searchClick = () => {
-    if (this.state.isSearchOpen) {
-      this.updateSearch();
-    } else {
-      this.setState({ ...this.state, isSearchOpen : true })
-    }
-
-  }
-
-  closeSearch = () => {
-    this.setState({ ...this.state, isSearchOpen : false })
   }
 
   render() {
@@ -111,23 +77,7 @@ class HomePage extends React.Component {
           title={
             <div style={{ display : 'flex' }}>
               <div style={{ flex : 3 }}></div>
-              <IconButton style={{ top : 12 }} iconStyle={{ color : 'White' }} onClick={ this.searchClick }><ActionSearch /></IconButton>
-            <div style={{ WebkitTransition : 'width 0.2s', width : this.state.isSearchOpen ? 360 : 0, overflowX : 'hidden' }}>
-              <div style={{ width : 360 }}>
-                <AutoComplete
-                  fullWidth
-                  hintText="Search"
-                  onUpdateInput={ this.updateSearchInput }
-                  inputStyle={{ color : 'White' }}
-                  textFieldStyle={{ color : 'White' }}
-                  hintStyle={{ color : 'White' }}
-                  underlineFocusStyle={{ borderColor : 'White' }}
-                  filter={ () => (true) }
-                  onNewRequest={ this.updateSearch }
-                  dataSource={ this.state.autoCompleteSongs }/>
-              </div>
-            </div>
-              <IconButton style={{ top : 13, display : this.state.isSearchOpen ? 'inline-block' : 'none' }} iconStyle={{ color : 'White' }} onClick={ this.closeSearch }><NavigationClose /></IconButton>
+              <SearchBar search={ this.updateSearch }/>
             </div>
           }
           style={{ position : 'fixed', top : 0 }}
@@ -137,7 +87,7 @@ class HomePage extends React.Component {
         <div className="Body" style={{ padding : 64 }}>
         <Paper style={{ margin: 14 }}>
           <LinearProgress mode={ 'determinate' } value={ this.state.currentTime / this.props.currentSong.duration *100} max={ 100 }/>
-          <Subheader>{ this.state.currentSearch.length != 0 ? 'Showing results for ' + this.state.currentResults : '' }</Subheader>
+          <Subheader>{ this.state.currentSearch.length > 0 ? 'Showing results for ' + this.state.currentResults : '' }</Subheader>
           <SongList
             songs={ this.state.songs }
             currentSong={ this.props.currentSong }
