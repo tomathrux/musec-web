@@ -13,7 +13,7 @@ class SongList extends React.Component {
     songs: React.PropTypes.array.isRequired,
     changeCurrentSong: PropTypes.func.isRequired,
     togglePlay: PropTypes.func.isRequired,
-    paying : PropTypes.bool.isRequired,
+    playing : PropTypes.bool.isRequired,
   };
 
   togglePlay = (song) => {

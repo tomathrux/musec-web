@@ -2,7 +2,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { AppBar, Paper, AutoComplete, Subheader, IconButton, LinearProgress } from 'material-ui';
-import { AvPlayArrow, AvPause, AvSkipNext, AvSkipPrevious } from 'material-ui/svg-icons'
+import { AvPlayArrow, AvPause, AvSkipNext, AvSkipPrevious, ActionSearch, NavigationClose } from 'material-ui/svg-icons'
 import { MenuDrawer, SongList } from '../components'
 import * as actionCreators from '../state/actions';
 import { Player } from '../components'
@@ -28,6 +28,7 @@ class HomePage extends React.Component {
     super(props);
     this.state = {
       isMenuOpen : false,
+      isSearchOpen : false,
       songs : [],
       autoCompleteSongs : [],
       currentSearch : "",
@@ -87,39 +88,51 @@ class HomePage extends React.Component {
     this.setState({ ...this.state, isMenuOpen : !this.state.isMenuOpen })
   }
 
+  searchClick = () => {
+    if (this.state.isSearchOpen) {
+      this.updateSearch();
+    } else {
+      this.setState({ ...this.state, isSearchOpen : true })
+    }
+
+  }
+
+  closeSearch = () => {
+    this.setState({ ...this.state, isSearchOpen : false })
+  }
+
   render() {
+
+    let { isMenuOpen } = this.state;
+
     return (
       <div>
         <AppBar
           title={
-            <div style={{ width : 640 }}>
-            <AutoComplete
-              fullWidth
-              hintText="Search"
-              onUpdateInput={ this.updateSearchInput }
-              listStyle={{ textOverflow : 'ellipsis' }}
-              underlineFocusStyle={{ borderColor : 'rgb(117, 117, 117)' }}
-              filter={ () => (true) }
-              onNewRequest={ this.updateSearch }
-              dataSource={ this.state.autoCompleteSongs }/>
+            <div style={{ display : 'flex' }}>
+              <div style={{ flex : 3 }}></div>
+              <IconButton style={{ top : 12 }} iconStyle={{ color : 'White' }} onClick={ this.searchClick }><ActionSearch /></IconButton>
+            <div style={{ WebkitTransition : 'width 0.2s', width : this.state.isSearchOpen ? 360 : 0, overflowX : 'hidden' }}>
+              <div style={{ width : 360 }}>
+                <AutoComplete
+                  fullWidth
+                  hintText="Search"
+                  onUpdateInput={ this.updateSearchInput }
+                  inputStyle={{ color : 'White' }}
+                  textFieldStyle={{ color : 'White' }}
+                  hintStyle={{ color : 'White' }}
+                  underlineFocusStyle={{ borderColor : 'White' }}
+                  filter={ () => (true) }
+                  onNewRequest={ this.updateSearch }
+                  dataSource={ this.state.autoCompleteSongs }/>
+              </div>
+            </div>
+              <IconButton style={{ top : 13, display : this.state.isSearchOpen ? 'inline-block' : 'none' }} iconStyle={{ color : 'White' }} onClick={ this.closeSearch }><NavigationClose /></IconButton>
             </div>
           }
           style={{ position : 'fixed', top : 0 }}
           onLeftIconButtonTouchTap={ this.toggleDrawer }
-          iconClassNameRight="muidocs-icon-navigation-expand-more"
         >
-          <div style={{ display : 'flex', paddingTop : 8 }}>
-            <Subheader>{ this.props.currentSong.snippet ? this.props.currentSong.snippet.title : '' }</Subheader>
-            <IconButton>
-              <AvSkipPrevious />
-            </IconButton>
-            <IconButton onClick={ this.props.togglePlay }>
-              { this.props.playing ? <AvPause/> : <AvPlayArrow/> }
-            </IconButton>
-            <IconButton>
-              <AvSkipNext/>
-            </IconButton>
-          </div>
         </AppBar>
         <div className="Body" style={{ padding : 64 }}>
         <Paper style={{ margin: 14 }}>
@@ -147,5 +160,4 @@ class HomePage extends React.Component {
     );
   }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
