@@ -5,7 +5,7 @@ import { AppBar, Paper, AutoComplete, Subheader, IconButton, LinearProgress } fr
 import { AvPlayArrow, AvPause, AvSkipNext, AvSkipPrevious, ActionSearch, NavigationClose } from 'material-ui/svg-icons'
 import { MenuDrawer, SongList } from '../components'
 import * as actionCreators from '../state/actions';
-import { Player, SearchBar } from '../components'
+import { Player, SearchBar, ControlBar } from '../components'
 import * as requests from '../requests';
 
 const mapStateToProps = (state) => {
@@ -78,6 +78,7 @@ class HomePage extends React.Component {
           onLeftIconButtonTouchTap={ this.toggleDrawer }
         >
         </AppBar>
+        <ControlBar />
         <div className="Body" style={{ padding : 64 }}>
         <Paper style={{ margin: 14 }}>
           <LinearProgress mode={ 'determinate' } value={ this.state.currentTime / this.props.currentSong.duration *100} max={ 100 }/>
