@@ -36,9 +36,13 @@ class SearchBar extends React.Component {
   }
 
   getSearchSuggestions = (input) => {
-    searchSuggestions(input).then((suggestions) => {
-      this.setState({...this.state, searchSuggestions: suggestions});
-    })
+    if (input.length > 2) {
+      searchSuggestions(input).then((suggestions) => {
+        this.setState({...this.state, searchSuggestions: suggestions});
+      })
+    } else {
+      this.setState({ ...this.state, searchSuggestions: [] });
+    }
   }
 
   render() {
@@ -73,6 +77,7 @@ class SearchBar extends React.Component {
               underlineFocusStyle={{ borderColor : 'White' }}
               onUpdateInput={ this.getSearchSuggestions }
               onNewRequest={ this.props.search }
+              filter={ () => (true) }
               dataSource={ this.state.searchSuggestions }/>
           </div>
         </div>
