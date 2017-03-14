@@ -1,6 +1,6 @@
 
 import React, { PropTypes } from 'react';
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, IconButton } from 'material-ui';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, IconButton, Subheader } from 'material-ui';
 import { AvPlayArrow, AvPause} from 'material-ui/svg-icons'
 
 class SongList extends React.Component {
@@ -32,11 +32,24 @@ class SongList extends React.Component {
     return (mins + ':' + seconds);
   };
 
+  parseContentType = (type) => {
+    let typeMap = {
+      "youtube#video" : "Track",
+      "youtube#playlist" : "Playlist",
+    }
+
+    if (!typeMap[type]) {
+      return ''
+    } else {
+      return typeMap[type]
+    }
+  }
+
 
   render() {
     if (this.props.songs.length == 0) {
       return (
-        <div style={{ margin : 14 }}>No results :(</div>
+        <Subheader>No results found</Subheader>
       );
     }
     return (
@@ -46,6 +59,7 @@ class SongList extends React.Component {
                 <TableHeaderColumn style={{ width : 30 }}></TableHeaderColumn>
                 <TableHeaderColumn>Song</TableHeaderColumn>
                 <TableHeaderColumn style={{ width : 150 }}>Channel</TableHeaderColumn>
+                <TableHeaderColumn style={{ width : 150 }}>Type</TableHeaderColumn>
                 <TableHeaderColumn style={{ width : 50 }}>Duration</TableHeaderColumn>
               </TableRow>
             </TableHeader>
@@ -63,6 +77,7 @@ class SongList extends React.Component {
                   </TableRowColumn>
                   <TableRowColumn>{ song.snippet.title }</TableRowColumn>
                   <TableRowColumn style={{ width : 150 }}>{ song.snippet.channelTitle }</TableRowColumn>
+                  <TableRowColumn style={{ width : 150 }}>{ this.parseContentType(song.id.kind) }</TableRowColumn>
                   <TableRowColumn style={{ width : 50 }}>{ this.convertDuration(song.duration) }</TableRowColumn>
                 </TableRow>
               )) }

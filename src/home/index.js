@@ -37,12 +37,6 @@ class HomePage extends React.Component {
     };
   }
 
-  componentWillMount() {
-    requests.songSearch('Wubstep', 25).then((res) => (
-      this.setState({ ...this.state, songs : res })
-    ))
-  }
-
   // TODO convert to redux state
   updateProgress = (time) => {
     if (Math.floor(time) != this.state.currentTime) {
