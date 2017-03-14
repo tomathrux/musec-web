@@ -1,7 +1,8 @@
 
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { AppBar, Paper, AutoComplete, Subheader } from 'material-ui';
+import { AppBar, Paper, AutoComplete, Subheader, IconButton, LinearProgress } from 'material-ui';
+import { AvPlayArrow, AvPause, AvSkipNext, AvSkipPrevious } from 'material-ui/svg-icons'
 import { MenuDrawer, SongList } from '../components'
 import * as actionCreators from '../state/actions';
 import { Player } from '../components'
@@ -30,6 +31,8 @@ class HomePage extends React.Component {
       songs : [],
       autoCompleteSongs : [],
       currentSearch : "",
+      currentResults : "",
+      currentTime : 0,
     };
   }
 
@@ -75,7 +78,7 @@ class HomePage extends React.Component {
       this.setState({ ...this.state, songs : [] })
     } else {
       requests.songSearch(terms, 50).then((res) => (
-        this.setState({ ...this.state, songs : res })
+        this.setState({ ...this.state, songs : res, currentResults : terms })
       ))
     }
   }
@@ -88,25 +91,40 @@ class HomePage extends React.Component {
     return (
       <div>
         <AppBar
-          title=""
+          title={
+            <div style={{ width : 640 }}>
+            <AutoComplete
+              fullWidth
+              hintText="Search"
+              onUpdateInput={ this.updateSearchInput }
+              listStyle={{ textOverflow : 'ellipsis' }}
+              underlineFocusStyle={{ borderColor : 'rgb(117, 117, 117)' }}
+              filter={ () => (true) }
+              onNewRequest={ this.updateSearch }
+              dataSource={ this.state.autoCompleteSongs }/>
+            </div>
+          }
+          style={{ position : 'fixed', top : 0 }}
           onLeftIconButtonTouchTap={ this.toggleDrawer }
           iconClassNameRight="muidocs-icon-navigation-expand-more"
-        />
-        <div className="Body">
-        <Paper style={{ margin : '14px 14px 0px 14px', display : 'flex', flexDirection : 'row' }}>
-          <div style={{ width : 500 }}>
-              <AutoComplete
-                style={{ marginLeft : 14 }}
-                fullWidth
-                floatingLabelText="Search"
-                onUpdateInput={ this.updateSearchInput }
-                filter={ () => (true) }
-                onNewRequest={ this.updateSearch }
-                dataSource={ this.state.autoCompleteSongs }/>
+        >
+          <div style={{ display : 'flex', paddingTop : 8 }}>
+            <Subheader>{ this.props.currentSong.snippet ? this.props.currentSong.snippet.title : '' }</Subheader>
+            <IconButton>
+              <AvSkipPrevious />
+            </IconButton>
+            <IconButton onClick={ this.props.togglePlay }>
+              { this.props.playing ? <AvPause/> : <AvPlayArrow/> }
+            </IconButton>
+            <IconButton>
+              <AvSkipNext/>
+            </IconButton>
           </div>
-        </Paper>
+        </AppBar>
+        <div className="Body" style={{ padding : 64 }}>
         <Paper style={{ margin: 14 }}>
-          <Subheader>{ this.state.currentSearch.length != 0 ? 'Searched for: ' + this.state.currentSearch : '' }</Subheader>
+          <LinearProgress mode={ 'determinate' } value={ this.state.currentTime / this.props.currentSong.duration *100} max={ 100 }/>
+          <Subheader>{ this.state.currentSearch.length != 0 ? 'Showing results for ' + this.state.currentResults : '' }</Subheader>
           <SongList
             songs={ this.state.songs }
             currentSong={ this.props.currentSong }
@@ -124,8 +142,8 @@ class HomePage extends React.Component {
           runTime={ this.props.currentSong.duration }
           onProgressUpdate={ this.updateProgress }
           onEnd={ this.props.togglePlay }/>
-        <Paper>Hey dere</Paper>
       </div>
+
     );
   }
 }

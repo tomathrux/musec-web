@@ -13,14 +13,17 @@ class SongList extends React.Component {
     songs: React.PropTypes.array.isRequired,
     changeCurrentSong: PropTypes.func.isRequired,
     togglePlay: PropTypes.func.isRequired,
+    paying : PropTypes.bool.isRequired,
   };
 
   togglePlay = (song) => {
 
-    if (!this.props.currentSong.id.kind || this.props.currentSong.id.videoId == song.id.videoId) {
+    if (this.props.playing && this.props.currentSong.id.videoId != song.id.videoId) {
+      this.props.changeCurrentSong(song);
+    } else {
+      this.props.changeCurrentSong(song);
       this.props.togglePlay();
     }
-    this.props.changeCurrentSong(song);
   };
 
   convertDuration = (seconds) => {
@@ -50,7 +53,7 @@ class SongList extends React.Component {
               { this.props.songs.map((song) => (
                 <TableRow
                   hoverable={ true }
-                  style={{ backgroundColor : this.props.currentSong.id.videoId==song.id.videoId ? 'rgb(224, 224, 224)' : ''}}
+                  style={{ backgroundColor : this.props.currentSong.id.videoId==song.id.videoId ? 'rgb(224,224,224)' : ''}}
                   selectable={ true }
                   key={ song.id.videoId }
                   onDoubleClick={ () => this.togglePlay(song) }>
