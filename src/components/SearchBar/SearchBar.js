@@ -78,7 +78,7 @@ class SearchBar extends React.Component {
               inputStyle={{ color : 'White' }}
               textFieldStyle={{ color : 'White' }}
               hintStyle={{ color : 'White' }}
-              underlineFocusStyle={{ borderColor : 'White' }}
+              underlineFocusStyle={{ borderColor : 'rgb(0, 151, 167)' }}
               onUpdateInput={ this.getSearchSuggestions }
               onNewRequest={ this.props.search }
               filter={ () => (true) }

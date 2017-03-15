@@ -1,7 +1,25 @@
 
 import React, { PropTypes } from 'react';
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, IconButton, Subheader } from 'material-ui';
-import { AvPlayArrow, AvPause} from 'material-ui/svg-icons'
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, IconButton, Subheader, IconMenu, MenuItem } from 'material-ui';
+import { AvPlayArrow, AvPause, NavigationMoreVert} from 'material-ui/svg-icons'
+
+const iconButtonElement = (
+  <IconButton
+    touch={true}
+    tooltip="more"
+    tooltipPosition="bottom-left"
+  >
+    <NavigationMoreVert />
+  </IconButton>
+);
+
+const rightIconMenu = (
+  <IconMenu iconButtonElement={iconButtonElement}>
+    <MenuItem>Reply</MenuItem>
+    <MenuItem>Forward</MenuItem>
+    <MenuItem>Delete</MenuItem>
+  </IconMenu>
+);
 
 class SongList extends React.Component {
 
@@ -58,9 +76,10 @@ class SongList extends React.Component {
               <TableRow>
                 <TableHeaderColumn style={{ width : 30 }}></TableHeaderColumn>
                 <TableHeaderColumn>Song</TableHeaderColumn>
-                <TableHeaderColumn style={{ width : 150 }}>Channel</TableHeaderColumn>
-                <TableHeaderColumn style={{ width : 150 }}>Type</TableHeaderColumn>
+                <TableHeaderColumn style={{ width : 100 }}>Channel</TableHeaderColumn>
+                <TableHeaderColumn style={{ width : 50 }}>Type</TableHeaderColumn>
                 <TableHeaderColumn style={{ width : 50 }}>Duration</TableHeaderColumn>
+                <TableHeaderColumn style={{ width : 20 }}></TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={ false }>
@@ -76,9 +95,10 @@ class SongList extends React.Component {
                   </IconButton>}
                   </TableRowColumn>
                   <TableRowColumn>{ song.snippet.title }</TableRowColumn>
-                  <TableRowColumn style={{ width : 150 }}>{ song.snippet.channelTitle }</TableRowColumn>
-                  <TableRowColumn style={{ width : 150 }}>{ this.parseContentType(song.id.kind) }</TableRowColumn>
+                  <TableRowColumn style={{ width : 100 }}>{ song.snippet.channelTitle }</TableRowColumn>
+                  <TableRowColumn style={{ width : 50 }}>{ this.parseContentType(song.id.kind) }</TableRowColumn>
                   <TableRowColumn style={{ width : 50 }}>{ this.convertDuration(song.duration) }</TableRowColumn>
+                  <TableRowColumn style={{ width : 20 }}>{ rightIconMenu }</TableRowColumn>
                 </TableRow>
               )) }
             </TableBody>

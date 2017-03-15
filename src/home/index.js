@@ -74,14 +74,13 @@ class HomePage extends React.Component {
               <SearchBar search={ this.updateSearch }/>
             </div>
           }
-          style={{ position : 'fixed', top : 0 }}
+          style={{ position : 'fixed', top : 0, backgroundColor : 'rgb(48, 48, 48)' }}
           onLeftIconButtonTouchTap={ this.toggleDrawer }
         >
         </AppBar>
-        <ControlBar />
+        <ControlBar progress={ this.state.currentTime / this.props.currentSong.duration *100}/>
         <div className="Body" style={{ padding : 64 }}>
         <Paper style={{ margin: 14 }}>
-          <LinearProgress mode={ 'determinate' } value={ this.state.currentTime / this.props.currentSong.duration *100} max={ 100 }/>
           <Subheader>{ this.state.currentSearch.length > 0 ? 'Showing results for ' + this.state.currentResults : '' }</Subheader>
           <SongList
             songs={ this.state.songs }

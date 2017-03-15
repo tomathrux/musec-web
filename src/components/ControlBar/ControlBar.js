@@ -2,7 +2,7 @@
  * Created by t on 14/03/17.
  */
 import React, { PropTypes }from 'react';
-import { IconButton, LinearProgress } from 'material-ui';
+import { IconButton, Slider } from 'material-ui';
 import { AvPlayArrow, AvPause, AvSkipNext, AvSkipPrevious } from 'material-ui/svg-icons';
 
 
@@ -15,6 +15,7 @@ class ControlBar extends React.Component {
   }
 
   static propTypes = {
+    progress : PropTypes.number.isRequired,
   };
 
   render() {
@@ -24,17 +25,40 @@ class ControlBar extends React.Component {
         style={{
           width : '100%',
           height : 64,
-          backgroundColor : 'rgb(0, 188, 212)',
+          backgroundColor : 'rgb(48, 48, 48)',
           position : 'fixed',
           bottom : 0,
-          zIndex : 1101
+          zIndex : 1101,
+          display : 'flex'
         }}>
-        <div>
-          <IconButton
-            name="skipPrevious">
-            <AvSkipPrevious/>
-          </IconButton>
+        <div style={{ flex : 1}}/>
+        <div style={{ flex : 8 }}>
+          <div style={{ height : '100%', display : 'flex', flexDirection : 'column' }}>
+            <div style={{ display : 'flex' }}>
+              <div style={{ flex : 1 }}/>
+                <div style={{ display : 'flex' }}>
+                  <IconButton
+                    name="previoustrack"
+                    iconStyle={{ color : 'White' }}>
+                    <AvSkipPrevious/>
+                  </IconButton>
+                  <IconButton
+                    name="pauseplaytrack"
+                    iconStyle={{ color : 'White' }}>
+                    <AvPlayArrow/>
+                  </IconButton>
+                  <IconButton
+                    name="nexttrack"
+                    iconStyle={{ color : 'White' }}>
+                    <AvSkipNext/>
+                  </IconButton>
+                </div>
+              <div style={{ flex : 1 }}/>
+            </div>
+          <Slider sliderStyle={{ marginTop : 0, marginBottom : 10 }}value={this.props.progress} max={100}/>
+          </div>
         </div>
+        <div style={{ flex : 1}}/>
       </div>
     );
   }
