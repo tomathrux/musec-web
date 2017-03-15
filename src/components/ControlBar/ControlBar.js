@@ -3,8 +3,7 @@
  */
 import React, { PropTypes }from 'react';
 import { IconButton, Slider, Subheader } from 'material-ui';
-import { AvPlayArrow, AvPause, AvSkipNext, AvSkipPrevious } from 'material-ui/svg-icons';
-
+import { AvPlayArrow, AvPause, AvSkipNext, AvSkipPrevious, AvShuffle, AvLoop } from 'material-ui/svg-icons';
 
 class ControlBar extends React.Component {
 
@@ -51,23 +50,39 @@ class ControlBar extends React.Component {
               <div style={{ flex : 1 }}/>
                 <div style={{ display : 'flex' }}>
                   <IconButton
+                    name="shuffletracks"
+                    style={{ marginTop : 8 }}
+                    iconStyle={{ color : 'White', height : 15, width : 15 }}>
+                    <AvShuffle/>
+                  </IconButton>
+                  <IconButton
                     name="previoustrack"
+                    style={{ marginTop : 8 }}
                     iconStyle={{ color : 'White' }}>
                     <AvSkipPrevious/>
                   </IconButton>
                   <IconButton
                     name="pauseplaytrack"
-                    iconStyle={{ color : 'White' }}>
-                    <AvPlayArrow/>
+                    style={{ height : 60, width : 60 }}
+                    iconStyle={{ color : 'White', fontSize : 40 }}>
+                    <i className="material-icons">play_arrow</i>
                   </IconButton>
                   <IconButton
                     name="nexttrack"
+                    style={{ marginTop : 8 }}
                     iconStyle={{ color : 'White' }}>
                     <AvSkipNext/>
+                  </IconButton>
+                  <IconButton
+                    name="looptracks"
+                    style={{ marginTop : 8 }}
+                    iconStyle={{ color : 'White', height : 15, width : 15 }}>
+                    <AvLoop/>
                   </IconButton>
                 </div>
               <div style={{ flex : 1 }}/>
             </div>
+            { Math.round( this.props.progress /100 * this.props.currentSong.duration) }
           <Slider ref='progressslider' sliderStyle={{ marginTop : 0, marginBottom : 10 }}value={this.props.progress} max={100} onDragStop={ this.onDragProgress }/>
           </div>
         </div>
