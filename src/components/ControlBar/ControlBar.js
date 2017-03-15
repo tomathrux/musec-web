@@ -17,6 +17,8 @@ class ControlBar extends React.Component {
     currentSong : PropTypes.object.isRequired,
     progress : PropTypes.number.isRequired,
     editProgress : PropTypes.func.isRequired,
+    playing : PropTypes.bool.isRequired,
+    togglePlay : PropTypes.func.isRequired,
   };
 
   onDragProgress = () => {
@@ -64,8 +66,9 @@ class ControlBar extends React.Component {
                   <IconButton
                     name="pauseplaytrack"
                     style={{ height : 60, width : 60 }}
-                    iconStyle={{ color : 'White', fontSize : 40 }}>
-                    <i className="material-icons">play_arrow</i>
+                    iconStyle={{ color : 'White', fontSize : 40 }}
+                    onClick={ this.props.togglePlay }>
+                    <i className="material-icons">{ this.props.playing ? 'pause': 'play_arrow'}</i>
                   </IconButton>
                   <IconButton
                     name="nexttrack"
