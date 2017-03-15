@@ -47,6 +47,11 @@ class HomePage extends React.Component {
     }
   }
 
+  editProgress = (progress) => {
+    this.refs.player.refs.player.currentTime = Math.round(progress/100 * this.props.currentSong.duration)
+    console.log(this.refs.player);
+  }
+
   updateSearch = (terms) => {
     if (terms.length == 0) {
       this.setState({ ...this.state, songs : [] })
@@ -78,7 +83,8 @@ class HomePage extends React.Component {
           onLeftIconButtonTouchTap={ this.toggleDrawer }
         >
         </AppBar>
-        <ControlBar progress={ this.state.currentTime / this.props.currentSong.duration *100}/>
+        <ControlBar progress={ this.state.currentTime / this.props.currentSong.duration *100}
+          editProgress={ this.editProgress }/>
         <div className="Body" style={{ padding : 64 }}>
         <Paper style={{ margin: 14 }}>
           <Subheader>{ this.state.currentSearch.length > 0 ? 'Showing results for ' + this.state.currentResults : '' }</Subheader>
@@ -94,6 +100,7 @@ class HomePage extends React.Component {
           isOpen={ this.state.isMenuOpen }
           onRequestChange={ this.toggleDrawer }/>
         <Player
+          ref="player"
           playing={ this.props.playing }
           src={ 'http://localhost:3002/audio?videoId=' + this.props.currentSong.id.videoId }
           runTime={ this.props.currentSong.duration }

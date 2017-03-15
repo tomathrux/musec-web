@@ -16,7 +16,13 @@ class ControlBar extends React.Component {
 
   static propTypes = {
     progress : PropTypes.number.isRequired,
+    editProgress : PropTypes.func.isRequired,
   };
+
+  onDragProgress = () => {
+    let val = this.refs.progressslider.state.value;
+    this.props.editProgress(val);
+  }
 
   render() {
 
@@ -55,7 +61,7 @@ class ControlBar extends React.Component {
                 </div>
               <div style={{ flex : 1 }}/>
             </div>
-          <Slider sliderStyle={{ marginTop : 0, marginBottom : 10 }}value={this.props.progress} max={100}/>
+          <Slider ref='progressslider' sliderStyle={{ marginTop : 0, marginBottom : 10 }}value={this.props.progress} max={100} onDragStop={ this.onDragProgress }/>
           </div>
         </div>
         <div style={{ flex : 1}}/>
