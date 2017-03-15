@@ -7,6 +7,9 @@ export default {
     id : {
       videoId : ''
     },
+    snippet : {
+
+    }
   },
   playing : false,
   loading : false,

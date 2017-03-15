@@ -49,7 +49,6 @@ class HomePage extends React.Component {
 
   editProgress = (progress) => {
     this.refs.player.refs.player.currentTime = Math.round(progress/100 * this.props.currentSong.duration)
-    console.log(this.refs.player);
   }
 
   updateSearch = (terms) => {
@@ -83,7 +82,9 @@ class HomePage extends React.Component {
           onLeftIconButtonTouchTap={ this.toggleDrawer }
         >
         </AppBar>
-        <ControlBar progress={ this.state.currentTime / this.props.currentSong.duration *100}
+        <ControlBar
+          currentSong={ this.props.currentSong }
+          progress={ this.state.currentTime / this.props.currentSong.duration *100}
           editProgress={ this.editProgress }/>
         <div className="Body" style={{ padding : 64 }}>
         <Paper style={{ margin: 14 }}>
