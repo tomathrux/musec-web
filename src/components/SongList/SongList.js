@@ -86,8 +86,8 @@ class SongList extends React.Component {
               { this.props.songs.map((song) => (
                 <TableRow
                   hoverable={ true }
-                  style={{ backgroundColor : this.props.currentSong.id.videoId==song.id.videoId ? 'rgba(255, 255, 255, 0.298039)' : ''}}
-                  selectable={ true }
+                  style={{ backgroundColor : this.props.currentSong.id.videoId==song.id.videoId ? 'rgba(255, 255, 255, 0.03)' : '', borderBottom : ''}}
+                  selectable={ false }
                   key={ song.id.videoId }
                   onDoubleClick={ () => this.togglePlay(song) }>
                   <TableRowColumn style={{ width : 30 }}>{ <IconButton onClick={ () => this.togglePlay(song) }>
