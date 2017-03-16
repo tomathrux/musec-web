@@ -32,7 +32,7 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isMenuOpen : false,
+      isMenuOpen : true,
       songs : [],
       currentTime : 0,
       currentSearch : '',
@@ -92,8 +92,11 @@ class HomePage extends React.Component {
           togglePlay={ this.props.togglePlay }
           volume={ this.props.volume }
           updateVolume={ this.props.updateVolume }/>
-        <div className="Body" style={{ padding : 64 }}>
-        <Paper style={{ margin: 14 }}>
+        <div className="Body" style={{ display : 'flex' }}>
+          <div style={{ flex : this.state.isMenuOpen ? 1 : 0, marginTop : 78, overflowX : 'hidden', height : '100%' }}>
+            <MenuDrawer />
+          </div>
+        <Paper style={{ margin: '78px 28px 14px 28px', flex: 5 }}>
           <Subheader>{ this.state.currentSearch.length > 0 ? 'Showing results for ' + this.state.currentResults : '' }</Subheader>
           <SongList
             songs={ this.state.songs }
@@ -103,9 +106,6 @@ class HomePage extends React.Component {
             togglePlay={ this.props.togglePlay }/>
         </Paper>
         </div>
-        <MenuDrawer
-          isOpen={ this.state.isMenuOpen }
-          onRequestChange={ this.toggleDrawer }/>
         <Player
           ref="player"
           playing={ this.props.playing }

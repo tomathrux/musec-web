@@ -3,7 +3,7 @@
  */
 import React, { PropTypes }from 'react';
 import { IconButton, Slider, Subheader } from 'material-ui';
-import { AvVolumeOff, AvVolumeDown, AvVolumeUp, AvSkipNext, AvSkipPrevious, AvShuffle, AvLoop, AvQueueMusic } from 'material-ui/svg-icons';
+import { AvVolumeOff, AvVolumeDown, AvVolumeUp, AvPlayArrow, AvPause, AvSkipNext, AvSkipPrevious, AvShuffle, AvLoop, AvQueueMusic } from 'material-ui/svg-icons';
 
 class ControlBar extends React.Component {
 
@@ -87,9 +87,9 @@ class ControlBar extends React.Component {
                   <IconButton
                     name="pauseplaytrack"
                     style={{ height : 60, width : 60 }}
-                    iconStyle={{ color : 'lightslategray', fontSize : 40, position : 'absolute', left: 10, top : 10 }}
+                    iconStyle={{ color : 'rgb(0, 151, 167)', width : 40, height : 40, position : 'absolute', left: 10, top : 10 }}
                     onClick={ this.props.togglePlay }>
-                    <i className="material-icons">{ this.props.playing ? 'pause': 'play_arrow'}</i>
+                    { this.props.playing ? <AvPause/> : <AvPlayArrow/> }
                   </IconButton>
                   <IconButton
                     name="nexttrack"
