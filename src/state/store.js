@@ -8,6 +8,7 @@ const actionsMap = {
   [actionTypes.TOGGLEPLAY] : (state) => (actions.togglePlay(state)),
   [actionTypes.CHANGECURRENTSONG] : (state, action) => (actions.changeCurrentSong(state, action)),
   [actionTypes.UPDATECURRENTTIME] : (state, action) => (actions.updateCurrentTime(state, action)),
+  [actionTypes.UPDATEVOLUME] : (state, action) => (actions.updateVolume(state, action)),
 }
 
 const store = createStore((state = initialState, action) => {

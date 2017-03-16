@@ -20,6 +20,7 @@ class ControlBar extends React.Component {
     playing : PropTypes.bool.isRequired,
     togglePlay : PropTypes.func.isRequired,
     volume : PropTypes.number.isRequired,
+    updateVolume : PropTypes.func.isRequired,
   };
 
   onDragProgress = () => {
@@ -43,8 +44,11 @@ class ControlBar extends React.Component {
     }
   }
 
-  render() {
+  updateVolume = (e, val) => {
+    this.props.updateVolume(val)
+  }
 
+  render() {
     return (
       <div
         style={{
@@ -118,7 +122,12 @@ class ControlBar extends React.Component {
             <div style={{ flex : 1 }}></div>
             <AvQueueMusic/>
             { this.renderVolumeIcon(this.props.volume) }
-            <Slider style={{ marginLeft : 15, marginRight : 15, top : 45, width : '120' }} sliderStyle={{ marginBottom : 0, marginTop : 3}}/>
+            <Slider
+              style={{ marginLeft : 15, marginRight : 15, top : 45, width : 120 }}
+              sliderStyle={{ marginBottom : 0, marginTop : 3}}
+              value={ this.props.volume }
+              max={ 100 }
+              onChange={ this.updateVolume }/>
           </div>
         </div>
       </div>

@@ -12,3 +12,7 @@ export function changeCurrentSong(state, action) {
 export function updateCurrentTime(state, action) {
   return { ...state, currentTime : action.payload };
 }
+
+export function updateVolume(state, action) {
+  return { ...state, volume : action.payload };
+}

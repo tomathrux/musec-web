@@ -14,6 +14,7 @@ class Player extends React.Component {
     playing : PropTypes.bool.isRequired,
     src : PropTypes.string.isRequired,
     runTime : PropTypes.number.isRequired,
+    volume : PropTypes.number.isRequired,
 
     onEnd : React.PropTypes.func,
     onProgressUpdate : React.PropTypes.func,
@@ -47,6 +48,7 @@ class Player extends React.Component {
 
   componentDidUpdate = () => {
     this.props.playing ? this.refs.player.play() : this.refs.player.pause();;
+    this.refs.player.volume = this.props.volume/100;
   }
 
   render() {

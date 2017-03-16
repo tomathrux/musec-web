@@ -14,6 +14,7 @@ const mapStateToProps = (state) => {
     playing : state.playing,
     currentSong : state.currentSong,
     currentTime : state.currentTime,
+    volume : state.volume
   }
 }
 
@@ -22,6 +23,7 @@ const mapDispatchToProps = (dispatch) => {
     togglePlay : () => dispatch(actionCreators.togglePlay()),
     changeCurrentSong : (song) => dispatch(actionCreators.changeCurrentSong(song)),
     updateCurrentTime : (seconds) => dispatch(actionCreators.updateCurrentTime(seconds)),
+    updateVolume : (perc) => dispatch(actionCreators.updateVolume(perc)),
   }
 }
 
@@ -88,7 +90,8 @@ class HomePage extends React.Component {
           editProgress={ this.editProgress }
           playing={ this.props.playing }
           togglePlay={ this.props.togglePlay }
-          volume={ 40 }/>
+          volume={ this.props.volume }
+          updateVolume={ this.props.updateVolume }/>
         <div className="Body" style={{ padding : 64 }}>
         <Paper style={{ margin: 14 }}>
           <Subheader>{ this.state.currentSearch.length > 0 ? 'Showing results for ' + this.state.currentResults : '' }</Subheader>
@@ -108,6 +111,7 @@ class HomePage extends React.Component {
           playing={ this.props.playing }
           src={ 'http://localhost:3002/audio?videoId=' + this.props.currentSong.id.videoId }
           runTime={ this.props.currentSong.duration }
+          volume={ this.props.volume }
           onProgressUpdate={ this.updateProgress }
           onEnd={ this.props.togglePlay }/>
       </div>

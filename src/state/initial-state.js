@@ -14,4 +14,5 @@ export default {
   playing : false,
   loading : false,
   currentTime : 0,
+  volume : 100,
 }

@@ -19,3 +19,10 @@ export function updateCurrentTime(seconds) {
     payload : seconds,
   }
 }
+
+export function updateVolume(vol) {
+  return {
+    type : actionTypes.UPDATEVOLUME,
+    payload : vol,
+  }
+}
