@@ -3,7 +3,7 @@
  */
 import React, { PropTypes }from 'react';
 import { IconButton, Slider, Subheader } from 'material-ui';
-import { AvPlayArrow, AvPause, AvSkipNext, AvSkipPrevious, AvShuffle, AvLoop } from 'material-ui/svg-icons';
+import { AvVolumeOff, AvVolumeDown, AvVolumeUp, AvSkipNext, AvSkipPrevious, AvShuffle, AvLoop, AvQueueMusic } from 'material-ui/svg-icons';
 
 class ControlBar extends React.Component {
 
@@ -19,6 +19,7 @@ class ControlBar extends React.Component {
     editProgress : PropTypes.func.isRequired,
     playing : PropTypes.bool.isRequired,
     togglePlay : PropTypes.func.isRequired,
+    volume : PropTypes.number.isRequired,
   };
 
   onDragProgress = () => {
@@ -31,6 +32,16 @@ class ControlBar extends React.Component {
     seconds = ("00" + (seconds % 60)).slice(-2);
     return (mins + ':' + seconds);
   };
+
+  renderVolumeIcon = (volume) => {
+    if (volume == 0 ) {
+      return <AvVolumeOff/>
+    } else if (volume < 50) {
+      return <AvVolumeDown />
+    } else {
+      return <AvVolumeUp/>
+    }
+  }
 
   render() {
 
@@ -92,17 +103,24 @@ class ControlBar extends React.Component {
               <div style={{ flex : 1 }}/>
             </div>
             <div style={{ display : 'flex', flexDirection : 'row', flex : 1 }}>
-            <div style={{ marginRight : 10, color : 'rgba(255, 255, 255, 0.541176)', fontFamily : 'Roboto, sans-serif' }}>
-            { this.convertDuration(Math.round( this.props.progress /100 * this.props.currentSong.duration)) }
+              <div style={{ marginRight : 10, color : 'rgba(255, 255, 255, 0.541176)', fontFamily : 'Roboto, sans-serif' }}>
+                { this.convertDuration(Math.round( this.props.progress /100 * this.props.currentSong.duration)) }
               </div>
-          <Slider ref='progressslider' style={{  width : '100%' }} sliderStyle={{ marginBottom : 10, marginTop : 0 }} value={this.props.progress} max={100} onDragStop={ this.onDragProgress }/>
-            <div style={{ marginLeft : 10, color : 'rgba(255, 255, 255, 0.541176)', fontFamily : 'Roboto, sans-serif' }}>
+              <Slider ref='progressslider' style={{  width : '100%' }} sliderStyle={{ marginBottom : 10, marginTop : 0 }} value={this.props.progress} max={100} onDragStop={ this.onDragProgress }/>
+              <div style={{ marginLeft : 10, color : 'rgba(255, 255, 255, 0.541176)', fontFamily : 'Roboto, sans-serif' }}>
                 { this.convertDuration(this.props.currentSong.duration) }
-            </div>
+              </div>
             </div>
           </div>
         </div>
-        <div style={{ flex : 1}}/>
+        <div style={{ flex : 1}}>
+          <div style={{ display : 'flex', flexDirection : 'row', paddingTop : 33 }}>
+            <div style={{ flex : 1 }}></div>
+            <AvQueueMusic/>
+            { this.renderVolumeIcon(this.props.volume) }
+            <Slider style={{ marginLeft : 15, marginRight : 15, top : 45, width : '120' }} sliderStyle={{ marginBottom : 0, marginTop : 3}}/>
+          </div>
+        </div>
       </div>
     );
   }

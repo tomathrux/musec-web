@@ -87,7 +87,8 @@ class HomePage extends React.Component {
           progress={ this.props.currentTime / this.props.currentSong.duration *100}
           editProgress={ this.editProgress }
           playing={ this.props.playing }
-          togglePlay={ this.props.togglePlay }/>
+          togglePlay={ this.props.togglePlay }
+          volume={ 40 }/>
         <div className="Body" style={{ padding : 64 }}>
         <Paper style={{ margin: 14 }}>
           <Subheader>{ this.state.currentSearch.length > 0 ? 'Showing results for ' + this.state.currentResults : '' }</Subheader>
