@@ -6,5 +6,9 @@ export function togglePlay(state) {
 }
 
 export function changeCurrentSong(state, action) {
-  return { ...state, currentSong : action.payload};
+  return { ...state, currentSong : action.payload };
+}
+
+export function updateCurrentTime(state, action) {
+  return { ...state, currentTime : action.payload };
 }

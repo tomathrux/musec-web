@@ -13,6 +13,7 @@ const mapStateToProps = (state) => {
   return {
     playing : state.playing,
     currentSong : state.currentSong,
+    currentTime : state.currentTime,
   }
 }
 
@@ -20,6 +21,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     togglePlay : () => dispatch(actionCreators.togglePlay()),
     changeCurrentSong : (song) => dispatch(actionCreators.changeCurrentSong(song)),
+    updateCurrentTime : (seconds) => dispatch(actionCreators.updateCurrentTime(seconds)),
   }
 }
 
@@ -29,19 +31,16 @@ class HomePage extends React.Component {
     super(props);
     this.state = {
       isMenuOpen : false,
-      isSearchOpen : false,
       songs : [],
-      autoCompleteSongs : [],
-      currentSearch : "",
-      currentResults : "",
       currentTime : 0,
+      currentSearch : '',
     };
   }
 
   // TODO convert to redux state
   updateProgress = (time) => {
-    if (Math.floor(time) != this.state.currentTime) {
-      this.setState({ 'currentTime' : Math.floor(time) });
+    if (Math.round(time) != this.props.currentTime) {
+      this.props.updateCurrentTime(Math.round(time));
       if (Math.floor(time) == this.props.currentSong.duration) {
         this.props.togglePlay();
       }
@@ -85,7 +84,7 @@ class HomePage extends React.Component {
         </AppBar>
         <ControlBar
           currentSong={ this.props.currentSong }
-          progress={ this.state.currentTime / this.props.currentSong.duration *100}
+          progress={ this.props.currentTime / this.props.currentSong.duration *100}
           editProgress={ this.editProgress }
           playing={ this.props.playing }
           togglePlay={ this.props.togglePlay }/>

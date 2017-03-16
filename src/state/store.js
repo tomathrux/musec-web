@@ -7,6 +7,7 @@ import * as actions from './reducers';
 const actionsMap = {
   [actionTypes.TOGGLEPLAY] : (state) => (actions.togglePlay(state)),
   [actionTypes.CHANGECURRENTSONG] : (state, action) => (actions.changeCurrentSong(state, action)),
+  [actionTypes.UPDATECURRENTTIME] : (state, action) => (actions.updateCurrentTime(state, action)),
 }
 
 const store = createStore((state = initialState, action) => {

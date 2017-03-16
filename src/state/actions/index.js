@@ -12,3 +12,10 @@ export function changeCurrentSong(song) {
     payload : song,
   }
 }
+
+export function updateCurrentTime(seconds) {
+  return {
+    type : actionTypes.UPDATECURRENTTIME,
+    payload : seconds,
+  }
+}
