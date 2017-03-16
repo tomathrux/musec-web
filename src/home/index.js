@@ -2,11 +2,12 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { AppBar, Paper, AutoComplete, Subheader, IconButton, LinearProgress } from 'material-ui';
-import { AvPlayArrow, AvPause, AvSkipNext, AvSkipPrevious, ActionSearch, NavigationClose } from 'material-ui/svg-icons'
+import { NavigationMenu } from 'material-ui/svg-icons'
 import { MenuDrawer, SongList } from '../components'
 import * as actionCreators from '../state/actions';
 import { Player, SearchBar, ControlBar } from '../components'
 import * as requests from '../requests';
+require('./styles.css');
 
 const mapStateToProps = (state) => {
   return {

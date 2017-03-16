@@ -26,6 +26,12 @@ class ControlBar extends React.Component {
     this.props.editProgress(val);
   }
 
+  convertDuration = (seconds) => {
+    let mins = Math.floor(seconds / 60);
+    seconds = ("00" + (seconds % 60)).slice(-2);
+    return (mins + ':' + seconds);
+  };
+
   render() {
 
     return (
@@ -53,40 +59,47 @@ class ControlBar extends React.Component {
                 <div style={{ display : 'flex' }}>
                   <IconButton
                     name="shuffletracks"
-                    style={{ marginTop : 8 }}
+                    style={{ marginTop : 5 }}
                     iconStyle={{ color : 'White', height : 15, width : 15 }}>
                     <AvShuffle/>
                   </IconButton>
                   <IconButton
                     name="previoustrack"
-                    style={{ marginTop : 8 }}
+                    style={{ marginTop : 5 }}
                     iconStyle={{ color : 'White' }}>
                     <AvSkipPrevious/>
                   </IconButton>
                   <IconButton
                     name="pauseplaytrack"
                     style={{ height : 60, width : 60 }}
-                    iconStyle={{ color : 'White', fontSize : 40 }}
+                    iconStyle={{ color : 'lightslategray', fontSize : 40, position : 'absolute', left: 10, top : 10 }}
                     onClick={ this.props.togglePlay }>
                     <i className="material-icons">{ this.props.playing ? 'pause': 'play_arrow'}</i>
                   </IconButton>
                   <IconButton
                     name="nexttrack"
-                    style={{ marginTop : 8 }}
+                    style={{ marginTop : 5 }}
                     iconStyle={{ color : 'White' }}>
                     <AvSkipNext/>
                   </IconButton>
                   <IconButton
                     name="looptracks"
-                    style={{ marginTop : 8 }}
+                    style={{ marginTop : 5 }}
                     iconStyle={{ color : 'White', height : 15, width : 15 }}>
                     <AvLoop/>
                   </IconButton>
                 </div>
               <div style={{ flex : 1 }}/>
             </div>
-            { Math.round( this.props.progress /100 * this.props.currentSong.duration) }
-          <Slider ref='progressslider' sliderStyle={{ marginTop : 0, marginBottom : 10 }}value={this.props.progress} max={100} onDragStop={ this.onDragProgress }/>
+            <div style={{ display : 'flex', flexDirection : 'row', flex : 1 }}>
+            <div style={{ marginRight : 10, color : 'rgba(255, 255, 255, 0.541176)', fontFamily : 'Roboto, sans-serif' }}>
+            { this.convertDuration(Math.round( this.props.progress /100 * this.props.currentSong.duration)) }
+              </div>
+          <Slider ref='progressslider' style={{  width : '100%' }} sliderStyle={{ marginBottom : 10, marginTop : 0 }} value={this.props.progress} max={100} onDragStop={ this.onDragProgress }/>
+            <div style={{ marginLeft : 10, color : 'rgba(255, 255, 255, 0.541176)', fontFamily : 'Roboto, sans-serif' }}>
+                { this.convertDuration(this.props.currentSong.duration) }
+            </div>
+            </div>
           </div>
         </div>
         <div style={{ flex : 1}}/>

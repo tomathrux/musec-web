@@ -13,3 +13,8 @@
     padding: 0 16px;
   }
 }
+
+svg {
+  color: lightslategray !important;
+  fill: lightslategray !important;
+}

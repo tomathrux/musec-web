@@ -13,7 +13,6 @@ class SearchBar extends React.Component {
     this.state = {
       isSearchOpen : false,
       searchSuggestions : [],
-      searchText : '',
     }
   }
 
@@ -34,16 +33,16 @@ class SearchBar extends React.Component {
   }
 
   closeClick = () => {
-    this.setState({ ...this.state, isSearchOpen : false, searchText : '' });
+    this.setState({ ...this.state, isSearchOpen : false });
   }
 
   getSearchSuggestions = (input) => {
     if (input.length > 2) {
       searchSuggestions(input).then((suggestions) => {
-        this.setState({...this.state, searchSuggestions: suggestions, searchText : input});
+        this.setState({...this.state, searchSuggestions: suggestions });
       })
     } else {
-      this.setState({ ...this.state, searchSuggestions: [], searchText : input });
+      this.setState({ ...this.state, searchSuggestions: [] });
     }
   }
 
@@ -74,10 +73,9 @@ class SearchBar extends React.Component {
               fullWidth
               autoFocus={ true }
               hintText="Search"
-              searchText={ this.state.searchText }
               inputStyle={{ color : 'White' }}
               textFieldStyle={{ color : 'White' }}
-              hintStyle={{ color : 'White' }}
+              hintStyle={{ color : 'rgb(0, 151, 167)  ' }}
               underlineFocusStyle={{ borderColor : 'rgb(0, 151, 167)' }}
               onUpdateInput={ this.getSearchSuggestions }
               onNewRequest={ this.props.search }
