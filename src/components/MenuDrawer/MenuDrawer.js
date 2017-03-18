@@ -4,7 +4,7 @@ import { ActionHome, AvSubscriptions, ActionHistory, ActionSearch, SocialPerson,
 
 const primaryMenu = [
   <ListItem key={ 0 } primaryText="Home" leftIcon={ <ActionHome /> } />,
-  <ListItem key={ 1 } primaryText="Subscriptions" leftIcon={ <AvSubscriptions /> } />,
+  <ListItem key={ 1 } primaryText="Subscriptions"  leftIcon={ <AvSubscriptions /> } />,
   <ListItem key={ 2 } primaryText="History" leftIcon={ <ActionHistory /> } />,
   <ListItem key={ 3 } primaryText="Search" leftIcon={ <ActionSearch /> } />,
 ]
