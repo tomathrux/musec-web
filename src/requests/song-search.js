@@ -21,10 +21,11 @@ export default function songSearch(terms, results=30) {
     })
     .then(function(response) {
       let { items } = response
+      let mixRegex = /[^r][^e] ?[Mm]ix/
 
       for (let i in items) {
-        if (items[i].id.kind != "youtube#video" || items[i].snippet.liveBroadcastContent == "live") {
-          items.splice(i, 1);
+        if (items[i].snippet.title.match(mixRegex)) {
+          items[i].id.kind = "youtube#mix";
         }
       }
       return items;
@@ -37,10 +38,11 @@ export default function songSearch(terms, results=30) {
           return response.json()
         })
         .then(function(json) {
-
-          for (let i in items) {
-            if (!!json.items[i]) {
-              items[i].duration = parseDur(json.items[i].contentDetails.duration);
+          for (let i in json.items) {
+            for (let j in items) {
+              if (json.items[i].id == items[j].id.videoId) {
+                items[j].duration = parseDur(json.items[i].contentDetails.duration);
+              }
             }
           }
           return items;

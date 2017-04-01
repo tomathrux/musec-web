@@ -19,6 +19,8 @@ class ControlBar extends React.Component {
     editProgress : PropTypes.func.isRequired,
     playing : PropTypes.bool.isRequired,
     togglePlay : PropTypes.func.isRequired,
+    playNext : PropTypes.func.isRequired,
+    playPrevious : PropTypes.func.isRequired,
     volume : PropTypes.number.isRequired,
     updateVolume : PropTypes.func.isRequired,
   };
@@ -81,20 +83,22 @@ class ControlBar extends React.Component {
                   <IconButton
                     name="previoustrack"
                     style={{ marginTop : 5 }}
-                    iconStyle={{ color : 'White' }}>
+                    iconStyle={{ color : 'White' }}
+                    onClick={ this.props.playPrevious }>
                     <AvSkipPrevious/>
                   </IconButton>
                   <IconButton
                     name="pauseplaytrack"
                     style={{ height : 60, width : 60 }}
                     iconStyle={{ color : 'rgb(0, 151, 167)', width : 40, height : 40, position : 'absolute', left: 10, top : 10 }}
-                    onClick={ this.props.togglePlay }>
+                    onClick={ () => this.props.togglePlay(this.props.currentSong) }>
                     { this.props.playing ? <AvPause/> : <AvPlayArrow/> }
                   </IconButton>
                   <IconButton
                     name="nexttrack"
                     style={{ marginTop : 5 }}
-                    iconStyle={{ color : 'White' }}>
+                    iconStyle={{ color : 'White' }}
+                    onClick={ this.props.playNext }>
                     <AvSkipNext/>
                   </IconButton>
                   <IconButton
@@ -120,7 +124,7 @@ class ControlBar extends React.Component {
         <div style={{ flex : 1}}>
           <div style={{ display : 'flex', flexDirection : 'row', paddingTop : 33 }}>
             <div style={{ flex : 1 }}></div>
-            <AvQueueMusic/>
+            <AvQueueMusic style={{ marginRight : 10 }}/>
             { this.renderVolumeIcon(this.props.volume) }
             <Slider
               style={{ marginLeft : 15, marginRight : 15, top : 45, width : 120 }}

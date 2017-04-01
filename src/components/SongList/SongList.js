@@ -1,7 +1,7 @@
 
 import React, { PropTypes } from 'react';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, IconButton, Subheader, IconMenu, MenuItem } from 'material-ui';
-import { AvPlayArrow, AvPause, NavigationMoreVert} from 'material-ui/svg-icons'
+import { AvPlayArrow, AvPause, NavigationMoreVert, AvPlaylistPlay} from 'material-ui/svg-icons'
 
 const iconButtonElement = (
   <IconButton
@@ -13,14 +13,6 @@ const iconButtonElement = (
   </IconButton>
 );
 
-const rightIconMenu = (
-  <IconMenu iconButtonElement={iconButtonElement}>
-    <MenuItem>Reply</MenuItem>
-    <MenuItem>Forward</MenuItem>
-    <MenuItem>Delete</MenuItem>
-  </IconMenu>
-);
-
 class SongList extends React.Component {
 
   constructor(props) {
@@ -30,18 +22,11 @@ class SongList extends React.Component {
   static propTypes = {
     songs: React.PropTypes.array.isRequired,
     changeCurrentSong: PropTypes.func.isRequired,
+    listToQueue : PropTypes.func.isRequired,
+    addToQueue : PropTypes.func.isRequired,
+    insertIntoQueue : PropTypes.func.isRequired,
     togglePlay: PropTypes.func.isRequired,
     playing : PropTypes.bool.isRequired,
-  };
-
-  togglePlay = (song) => {
-
-    if (this.props.playing && this.props.currentSong.id.videoId != song.id.videoId) {
-      this.props.changeCurrentSong(song);
-    } else {
-      this.props.changeCurrentSong(song);
-      this.props.togglePlay();
-    }
   };
 
   convertDuration = (seconds) => {
@@ -52,7 +37,9 @@ class SongList extends React.Component {
 
   parseContentType = (type) => {
     let typeMap = {
+      "youtube#channel" : "Channel",
       "youtube#video" : "Track",
+      "youtube#mix" : "Mix",
       "youtube#playlist" : "Playlist",
     }
 
@@ -63,6 +50,10 @@ class SongList extends React.Component {
     }
   }
 
+  togglePlay(song) {
+    this.props.listToQueue();
+    this.props.togglePlay(song);
+  }
 
   render() {
     if (this.props.songs.length == 0) {
@@ -70,8 +61,9 @@ class SongList extends React.Component {
         <Subheader>No results found</Subheader>
       );
     }
+
     return (
-          <Table>
+          <Table wrapperStyle={{ marginBottom : 90 }}>
             <TableHeader displaySelectAll={ false } adjustForCheckbox={ false }>
               <TableRow>
                 <TableHeaderColumn style={{ width : 30 }}></TableHeaderColumn>
@@ -90,15 +82,20 @@ class SongList extends React.Component {
                   selectable={ false }
                   key={ song.id.videoId }
                   onDoubleClick={ () => this.togglePlay(song) }>
-                  <TableRowColumn style={{ width : 30 }}>{ <IconButton onClick={ () => this.togglePlay(song) }>
+                  <TableRowColumn style={{ width : 30 }}>{ song.id.kind=="youtube#video"||song.id.kind=="youtube#mix" ? <IconButton onClick={ () => this.togglePlay(song) }>
                     { this.props.currentSong.id.videoId==song.id.videoId && this.props.playing ? <AvPause/> : <AvPlayArrow /> }
-                  </IconButton>}
+                  </IconButton> : <IconButton disabled style={{ width : 30 }}><AvPlaylistPlay/></IconButton>}
                   </TableRowColumn>
                   <TableRowColumn>{ song.snippet.title }</TableRowColumn>
                   <TableRowColumn style={{ width : 100 }}>{ song.snippet.channelTitle }</TableRowColumn>
                   <TableRowColumn style={{ width : 50 }}>{ this.parseContentType(song.id.kind) }</TableRowColumn>
                   <TableRowColumn style={{ width : 50 }}>{ this.convertDuration(song.duration) }</TableRowColumn>
-                  <TableRowColumn style={{ width : 20 }}>{ rightIconMenu }</TableRowColumn>
+                  <TableRowColumn style={{ width : 20 }}>{  <IconMenu iconButtonElement={iconButtonElement}>
+                                                              <MenuItem onClick={ () => this.props.insertIntoQueue(song)}>Play Next</MenuItem>
+                                                              <MenuItem onClick={ () => this.props.addToQueue(song) }>Add to Queue</MenuItem>
+                                                              <MenuItem>Add to Playlist</MenuItem>
+                                                              <MenuItem>Download</MenuItem>
+                                                            </IconMenu> }</TableRowColumn>
                 </TableRow>
               )) }
             </TableBody>

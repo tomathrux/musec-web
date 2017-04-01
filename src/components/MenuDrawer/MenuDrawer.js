@@ -32,7 +32,7 @@ class MenuDrawer extends React.Component {
           { primaryMenu }
           <Subheader>LIBRARY</Subheader>
           { secondaryMenu }
-          <Subheader>SUBSCRIPTIONS</Subheader>
+          <Subheader>PLAYLISTS</Subheader>
         </List>
       </Paper>
     );

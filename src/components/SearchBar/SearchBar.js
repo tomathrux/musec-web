@@ -37,7 +37,7 @@ class SearchBar extends React.Component {
   }
 
   getSearchSuggestions = (input) => {
-    if (input.length > 2) {
+    if (input.length > 0) {
       searchSuggestions(input).then((suggestions) => {
         this.setState({...this.state, searchSuggestions: suggestions });
       })

@@ -3,7 +3,7 @@
  */
 
 export default function searchSuggestions(term) {
-  return fetch('http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=' + term)
+  return fetch('http://localhost:3002/suggest?term=' + term)
     .then(function(response) {
       return response.json();
     })
