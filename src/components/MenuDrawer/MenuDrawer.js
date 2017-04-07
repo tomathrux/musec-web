@@ -1,12 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { List, ListItem, Paper, Subheader } from 'material-ui';
 import { ActionHome, AvSubscriptions, ActionHistory, ActionSearch, SocialPerson, ActionThumbUp, AvLibraryMusic } from 'material-ui/svg-icons';
 
 const primaryMenu = [
-  <ListItem key={ 0 } primaryText="Home" leftIcon={ <ActionHome /> } />,
+  <Link path='/home'><ListItem key={ 0 } primaryText="Home" leftIcon={ <ActionHome /> } /></Link>,
   <ListItem key={ 1 } primaryText="Subscriptions"  leftIcon={ <AvSubscriptions /> } />,
   <ListItem key={ 2 } primaryText="History" leftIcon={ <ActionHistory /> } />,
-  <ListItem key={ 3 } primaryText="Search" leftIcon={ <ActionSearch /> } />,
+  <Link path='/search'><ListItem key={ 3 } primaryText="Search" leftIcon={ <ActionSearch /> } /></Link>,
 ]
 
 const secondaryMenu = [
@@ -28,12 +29,12 @@ class MenuDrawer extends React.Component {
   render() {
     return (
       <Paper>
-        <List>
-          { primaryMenu }
-          <Subheader>LIBRARY</Subheader>
-          { secondaryMenu }
-          <Subheader>PLAYLISTS</Subheader>
-        </List>
+          <List>
+            { primaryMenu }
+            <Subheader>LIBRARY</Subheader>
+            { secondaryMenu }
+            <Subheader>PLAYLISTS</Subheader>
+          </List>
       </Paper>
     );
   }

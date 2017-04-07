@@ -1,5 +1,6 @@
 
 import React, { PropTypes } from 'react';
+import { Route } from 'react-router';
 import { connect } from 'react-redux';
 import { AppBar, Paper, AutoComplete, Subheader, IconButton, LinearProgress } from 'material-ui';
 import { NavigationMenu } from 'material-ui/svg-icons'
@@ -129,16 +130,19 @@ class HomePage extends React.Component {
             <MenuDrawer />
           </div>
         <Paper style={{ margin: '78px 28px 14px 28px', flex: 5 }}>
-          <Subheader>{ this.state.currentSearch.length > 0 ? 'Showing results for ' + this.state.currentResults : '' }</Subheader>
-          <SongList
-            songs={ this.state.songs }
-            currentSong={ currentSong }
-            changeCurrentSong={ this.props.changeCurrentSong }
-            listToQueue={ this.listToQueue }
-            addToQueue={ this.props.addToQueue }
-            insertIntoQueue={ this.props.insertIntoQueue }
-            playing={ this.props.playing }
-            togglePlay={ this.props.togglePlay }/>
+          <Route path={'/home'} component={<div />} />  
+          <Route path={'/search'} component={
+            <SongList
+              songs={ this.state.songs }
+              currentSong={ currentSong }
+              changeCurrentSong={ this.props.changeCurrentSong }
+              listToQueue={ this.listToQueue }
+              addToQueue={ this.props.addToQueue }
+              insertIntoQueue={ this.props.insertIntoQueue }
+              playing={ this.props.playing }
+              togglePlay={ this.props.togglePlay }/>
+            } />
+            
         </Paper>
         </div>
         <Player

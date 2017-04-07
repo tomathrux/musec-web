@@ -13,6 +13,7 @@ import 'whatwg-fetch';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router } from 'react-router';
 import FastClick from 'fastclick';
 import { Provider } from 'react-redux';
 // Material ui theme injection
@@ -29,7 +30,7 @@ injectTapEventPlugin();
 
 const container = document.getElementById('container');
 
-ReactDOM.render(<MuiThemeProvider><Provider store={store}><HomePage /></Provider></MuiThemeProvider>, container);
+ReactDOM.render(<MuiThemeProvider><Router><Provider store={store}><HomePage /></Provider></Router></MuiThemeProvider>, container);
 
 // Eliminates the 300ms delay between a physical tap
 // and the firing of a click event on mobile browsers
