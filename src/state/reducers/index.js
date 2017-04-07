@@ -6,9 +6,9 @@ export function togglePlay(state, action) {
     return { ...state, playing : !state.playing };
   } else {
     if (state.playing) {
-      return { ...state, queuePosition : state.queue.indexOf(action.payload) };
+      return { ...state, queuePosition : state.queue.indexOf(action.payload), currentSong : action.payload };
     } else {
-      return { ...state, queuePosition : state.queue.indexOf(action.payload), playing : true };
+      return { ...state, queuePosition : state.queue.indexOf(action.payload), currentSong : action.payload, playing : true };
     }
   }
 }

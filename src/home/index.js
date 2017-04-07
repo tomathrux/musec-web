@@ -7,6 +7,7 @@ import { MenuDrawer, SongList } from '../components'
 import * as actionCreators from '../state/actions';
 import { Player, SearchBar, ControlBar } from '../components'
 import * as requests from '../requests';
+import * as constants from '../constants';
 require('./styles.css');
 
 const mapStateToProps = (state) => {
@@ -143,7 +144,7 @@ class HomePage extends React.Component {
         <Player
           ref="player"
           playing={ this.props.playing }
-          src={ 'http://localhost:3002/audio?videoId=' + this.props.queue[this.props.queuePosition].id.videoId }
+          src={ constants.api_url + 'audio?videoId=' + this.props.queue[this.props.queuePosition].id.videoId }
           runTime={ this.props.queue[this.props.queuePosition].duration }
           volume={ this.props.volume }
           onProgressUpdate={ this.updateProgress }
